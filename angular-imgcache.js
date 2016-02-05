@@ -57,6 +57,10 @@ angular.module('ImgCache', [])
                 });
             }
 
+            var clearImg = function(el, src){
+                el.attr('src', src);
+            }
+
             var loadImg = function(type, el, src) {
 
                 ImgCache.$promise.then(function() {
@@ -66,6 +70,9 @@ angular.module('ImgCache', [])
                         if (success) {
                             setImg(type, el, src);
                         } else {
+                            if (src === '') {
+                                clearImg(el, src);
+                            }
                             ImgCache.cacheFile(src, function() {
                                 setImg(type, el, src);
                             });
