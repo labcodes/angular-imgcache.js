@@ -57,8 +57,12 @@ angular.module('ImgCache', [])
                 });
             }
 
-            var clearImg = function(el, src){
-                el.attr('src', src);
+            var clearImg = function(type, el, src){
+                if(type === 'bg') {
+                    el.css({'background-image': 'url(' + src + ')' });
+                } else {
+                    el.attr('src', src);
+                }
             }
 
             var loadImg = function(type, el, src) {
@@ -71,7 +75,7 @@ angular.module('ImgCache', [])
                             setImg(type, el, src);
                         } else {
                             if (src === '') {
-                                clearImg(el, src);
+                                clearImg(type, el, src);
                             }
                             ImgCache.cacheFile(src, function() {
                                 setImg(type, el, src);
